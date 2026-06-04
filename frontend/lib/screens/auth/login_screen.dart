@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 40),
 
-                  // Hoặc đăng nhập bằng Social Media
+
 
 
                   const SizedBox(height: 40),

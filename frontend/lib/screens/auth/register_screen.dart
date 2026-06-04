@@ -16,8 +16,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     // Kiểm tra logic cơ bản
     if (usernameController.text.isEmpty ||
         emailController.text.isEmpty ||
-        passController.text.isEmpty ||
-        otpController.text.isEmpty) {
+        passController.text.isEmpty
+        // || otpController.text.isEmpty
+    ) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Vui lòng điền đầy đủ các thông tin")),
       );
@@ -39,12 +40,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  void sendOTP() {
-    // Logic gửi mã OTP xử lý ở đây
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Mã OTP đã được gửi đến ${emailController.text}")),
-    );
-  }
+  // void sendOTP() {
+  //   // Logic gửi mã OTP xử lý ở đây
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(content: Text("Mã OTP đã được gửi đến ${emailController.text}")),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -103,38 +104,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     SizedBox(height: 15),
 
                     // Hàng nhập OTP
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: TextField(
-                            controller: otpController,
-                            decoration: InputDecoration(
-                              labelText: "Mã OTP",
-                              prefixIcon: Icon(Icons.verified_user_outlined),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            height: 55,
-                            child: ElevatedButton(
-                              onPressed: sendOTP,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.orangeAccent,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                                padding: EdgeInsets.zero,
-                              ),
-                              child: Text("Gửi mã", style: TextStyle(color: Colors.white, fontSize: 13)),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 15),
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       flex: 2,
+                    //       child: TextField(
+                    //         controller: otpController,
+                    //         decoration: InputDecoration(
+                    //           labelText: "Mã OTP",
+                    //           prefixIcon: Icon(Icons.verified_user_outlined),
+                    //           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     SizedBox(width: 10),
+                    //     Expanded(
+                    //       flex: 1,
+                    //       child: SizedBox(
+                    //         height: 55,
+                    //         child: ElevatedButton(
+                    //           onPressed: sendOTP,
+                    //           style: ElevatedButton.styleFrom(
+                    //             backgroundColor: Colors.orangeAccent,
+                    //             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    //             padding: EdgeInsets.zero,
+                    //           ),
+                    //           child: Text("Gửi mã", style: TextStyle(color: Colors.white, fontSize: 13)),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(height: 15),
 
                     // Mật khẩu
                     TextField(
