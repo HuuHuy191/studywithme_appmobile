@@ -3,7 +3,9 @@ const User = require("../models/user.model");
 const generateToken = require("../utils/generateToken");
 
 const register = async (username, email, password) => {
-
+   console.log("username =", username);
+    console.log("email =", email);
+    console.log("password =", password);
     const existingUser = await User.findOne({
         where: { email }
     });

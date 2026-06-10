@@ -4,8 +4,10 @@ import '../../core/constants/app_strings.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textfield.dart';
 import 'register_screen.dart';
-
+import '../../controllers/auth_controller.dart';
+import '../home/home_screen.dart';
 class LoginScreen extends StatefulWidget {
+
   const LoginScreen({super.key});
 
   @override
@@ -15,7 +17,42 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final AuthController _authController = AuthController();
+  Future<void> login() async {
 
+    bool success =
+    await _authController.login(
+      _usernameController.text.trim(),
+      _passwordController.text.trim(),
+    );
+
+    print("LOGIN SUCCESS = $success");
+
+    if (success) {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Đăng nhập thành công"),
+        ),
+      );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
+        ),
+      );
+
+    } else {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Sai email hoặc mật khẩu"),
+        ),
+      );
+
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +136,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   // Nút đăng nhập chính
                   CustomButton(
                     text: "VÀO HỌC NGAY",
-                    onPressed: () {
+                    onPressed: () async {
+                      await login();
                       // Logic xử lý username: _usernameController.text
                     },
                   ),

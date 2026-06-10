@@ -8,5 +8,6 @@ const generateToken = (userId) => {
         { expiresIn: "7d" }
     );
 };
+console.log("JWT_SECRET =", env.JWT_SECRET);
 
 module.exports = generateToken;

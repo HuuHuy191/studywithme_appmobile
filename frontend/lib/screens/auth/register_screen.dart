@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../controllers/auth_controller.dart';
 class RegisterScreen extends StatefulWidget {
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -11,33 +11,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passController = TextEditingController();
   final confirmPassController = TextEditingController();
   final otpController = TextEditingController(); // Thêm controller OTP
+  final AuthController _authController =
+  AuthController();
+  Future<void> register() async {
 
-  void register() {
-    // Kiểm tra logic cơ bản
     if (usernameController.text.isEmpty ||
         emailController.text.isEmpty ||
-        passController.text.isEmpty
-        // || otpController.text.isEmpty
-    ) {
+        passController.text.isEmpty) {
+
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Vui lòng điền đầy đủ các thông tin")),
+        const SnackBar(
+          content: Text("Vui lòng nhập đầy đủ thông tin"),
+        ),
       );
+
       return;
     }
 
     if (passController.text != confirmPassController.text) {
+
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Mật khẩu xác nhận không khớp")),
+        const SnackBar(
+          content: Text("Mật khẩu không khớp"),
+        ),
       );
+
       return;
     }
 
-    // Trả dữ liệu về màn hình Login (bao gồm username để điền sẵn)
-    Navigator.pop(context, {
-      'username': usernameController.text,
-      'password': passController.text,
-      'email': emailController.text,
-    });
+    bool success =
+    await _authController.register(
+      usernameController.text.trim(),
+      emailController.text.trim(),
+      passController.text.trim(),
+    );
+
+    if (success) {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Đăng ký thành công"),
+        ),
+      );
+
+      Navigator.pop(context);
+
+    } else {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Đăng ký thất bại"),
+        ),
+      );
+
+    }
   }
 
   // void sendOTP() {
