@@ -16,4 +16,11 @@ app.get("/api/test", (req, res) => {
 });
 app.use("/api/auth", authRoutes);
 
+const courseRoutes =
+require("./routes/course.routes");
+
+app.use(
+   "/api/courses",
+   courseRoutes
+);
 module.exports = app;
