@@ -90,3 +90,51 @@ exports.deleteQuiz = async (
     }
 
 };
+exports.submitQuiz = async (req, res) => {
+
+    try {
+
+        const result =
+        await quizService.submitQuiz(
+
+            req.user.id,
+
+            req.body.courseId,
+
+            req.body.answers
+
+        );
+
+        res.json({
+            success: true,
+            data: result
+        });
+
+    } catch (error) {
+
+        res.status(400).json({
+            success: false,
+            message: error.message
+        });
+
+    }
+
+};
+exports.getResults =
+async (req, res) => {
+
+    const results =
+    await quizService.getResults(
+
+        req.user.id,
+
+        req.params.courseId
+
+    );
+
+    res.json({
+        success: true,
+        data: results
+    });
+
+};

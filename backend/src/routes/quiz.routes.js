@@ -28,4 +28,14 @@ router.delete(
     quizController.deleteQuiz
 );
 
+router.post(
+    "/submit",
+    authMiddleware,
+    quizController.submitQuiz
+);
+router.get(
+    "/results/:courseId",
+    authMiddleware,
+    quizController.getResults
+);
 module.exports = router;
