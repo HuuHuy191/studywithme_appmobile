@@ -1,34 +1,51 @@
 const Course = require("../models/course.model");
 
-// Tạo Course
+// Sinh mã lớp ngẫu nhiên
+function generateClassCode() {
+    return Math.random()
+        .toString(36)
+        .substring(2, 8)
+        .toUpperCase();
+}
+
+// Tạo lớp học
 const createCourse = async (
     userId,
     data
 ) => {
 
     return await Course.create({
-        title: data.title,
-        description: data.description,
-        type: data.type,
-        userId: userId
+
+        name: data.name,
+
+        description:
+        data.description,
+
+        classCode:
+        generateClassCode(),
+
+        ownerId: userId
+
     });
 
 };
 
-// Lấy tất cả Course của User
+// Lấy danh sách lớp do mình tạo
 const getCourses = async (
     userId
 ) => {
 
     return await Course.findAll({
+
         where: {
-            userId: userId
+            ownerId: userId
         }
+
     });
 
 };
 
-// Lấy Course theo ID
+// Lấy chi tiết lớp
 const getCourseById = async (
     userId,
     courseId
@@ -36,22 +53,26 @@ const getCourseById = async (
 
     const course =
     await Course.findOne({
+
         where: {
             id: courseId,
-            userId: userId
+            ownerId: userId
         }
+
     });
 
     if (!course) {
+
         throw new Error(
-            "Course not found"
+            "Class not found"
         );
+
     }
 
     return course;
 };
 
-// Xóa Course
+// Xóa lớp
 const deleteCourse = async (
     userId,
     courseId
@@ -59,16 +80,20 @@ const deleteCourse = async (
 
     const course =
     await Course.findOne({
+
         where: {
             id: courseId,
-            userId: userId
+            ownerId: userId
         }
+
     });
 
     if (!course) {
+
         throw new Error(
-            "Course not found"
+            "Class not found"
         );
+
     }
 
     await course.destroy();

@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-const Course = sequelize.define(
-  "Course",
+const Classroom = sequelize.define(
+  "Classroom",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -10,7 +10,7 @@ const Course = sequelize.define(
       autoIncrement: true,
     },
 
-    title: {
+    name: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
@@ -20,20 +20,21 @@ const Course = sequelize.define(
       allowNull: true,
     },
 
-    type: {
-      type: DataTypes.ENUM("vocab", "quiz"),
+    classCode: {
+      type: DataTypes.STRING(10),
       allowNull: false,
+      unique: true,
     },
 
-    userId: {
+    ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
-    tableName: "Courses",
+    tableName: "Classrooms",
     timestamps: true,
   }
 );
 
-module.exports = Course;
+module.exports = Classroom;

@@ -1,19 +1,23 @@
 const courseService =
 require("../services/course.service");
-
-// Lấy tất cả course của user
+const {
+    saveLog
+} = require(
+    "../services/auditLog.service"
+);
+// Lấy tất cả lớp học của user
 exports.getCourses = async (req, res) => {
 
     try {
 
-        const courses =
+        const classes =
         await courseService.getCourses(
             req.user.id
         );
 
         res.json({
             success: true,
-            data: courses
+            data: classes
         });
 
     } catch (error) {
@@ -26,12 +30,12 @@ exports.getCourses = async (req, res) => {
     }
 };
 
-// Lấy course theo id
+// Lấy chi tiết lớp học
 exports.getCourseById = async (req, res) => {
 
     try {
 
-        const course =
+        const classroom =
         await courseService.getCourseById(
             req.user.id,
             req.params.id
@@ -39,7 +43,7 @@ exports.getCourseById = async (req, res) => {
 
         res.json({
             success: true,
-            data: course
+            data: classroom
         });
 
     } catch (error) {
@@ -52,7 +56,7 @@ exports.getCourseById = async (req, res) => {
     }
 };
 
-// Tạo course
+// Tạo lớp học
 exports.createCourse = async (req, res) => {
 
     try {
@@ -61,6 +65,16 @@ exports.createCourse = async (req, res) => {
         await courseService.createCourse(
             req.user.id,
             req.body
+        );
+
+        await saveLog(
+
+            req.user,
+
+            "CREATE_CLASS",
+
+            `Tạo lớp ${course.name}`
+
         );
 
         res.status(201).json({
@@ -78,7 +92,7 @@ exports.createCourse = async (req, res) => {
     }
 };
 
-// Xóa course
+// Xóa lớp học
 exports.deleteCourse = async (req, res) => {
 
     try {
@@ -91,7 +105,7 @@ exports.deleteCourse = async (req, res) => {
         res.json({
             success: true,
             message:
-            "Course deleted successfully"
+            "Class deleted successfully"
         });
 
     } catch (error) {

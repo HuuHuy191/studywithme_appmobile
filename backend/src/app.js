@@ -6,7 +6,10 @@ const authRoutes = require("./routes/auth.routes");
 const courseRoutes = require("./routes/course.routes");
 const vocabRoutes = require("./routes/vocab.routes");
 const quizRoutes = require("./routes/quiz.routes");
-
+const classMemberRoutes =
+require(
+  "./routes/classMember.routes"
+);
 const app = express();
 
 app.use(cors());
@@ -22,6 +25,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/vocab", vocabRoutes);
 app.use("/api/quiz", quizRoutes);
-
+app.use(
+  "/api/class-member",
+  classMemberRoutes
+);
 
 module.exports = app;

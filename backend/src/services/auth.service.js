@@ -26,7 +26,10 @@ const register = async (username, email, password) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        token: generateToken(user.id)
+        token: generateToken(
+            user.id,
+            user.username
+        )
     };
 };
 
@@ -53,7 +56,10 @@ const login = async (email, password) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        token: generateToken(user.id)
+        token: generateToken(
+            user.id,
+            user.username
+        )
     };
 };
 

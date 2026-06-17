@@ -1,5 +1,9 @@
 const authService = require("../services/auth.service");
-
+const {
+    saveLog
+} = require(
+    "../services/auditLog.service"
+);
 const register = async (req, res) => {
     try {
 
@@ -11,6 +15,11 @@ const register = async (req, res) => {
             username,
             email,
             password
+        );
+        await saveLog(
+            result,
+            "REGISTER",
+            "Đăng ký tài khoản mới"
         );
 
         res.status(201).json({
@@ -39,6 +48,12 @@ const login = async (req, res) => {
             email,
             password
         );
+        await saveLog(
+            result,
+            "LOGIN",
+            "Đăng nhập thành công"
+        );
+
 
         res.json({
             success: true,
