@@ -18,20 +18,35 @@ class CreateCourseScreen
 class _CreateCourseScreenState
     extends State<CreateCourseScreen> {
 
-  final titleController =
+  final nameController =
+  TextEditingController();
+
+  final descriptionController =
   TextEditingController();
 
   final CourseController controller =
   CourseController();
 
-  String selectedType = "vocab";
-
   Future<void> saveCourse() async {
+
+    if (nameController.text.isEmpty) {
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Vui lòng nhập tên lớp",
+          ),
+        ),
+      );
+
+      return;
+    }
 
     bool success =
     await controller.createCourse(
-      titleController.text,
-      selectedType,
+      nameController.text.trim(),
+      descriptionController.text.trim(),
     );
 
     if (success) {
@@ -44,7 +59,7 @@ class _CreateCourseScreenState
           .showSnackBar(
         const SnackBar(
           content:
-          Text("Tạo thất bại"),
+          Text("Tạo lớp thất bại"),
         ),
       );
     }
@@ -54,23 +69,30 @@ class _CreateCourseScreenState
   Widget build(BuildContext context) {
 
     return Scaffold(
+
       appBar: AppBar(
-        title:
-        const Text("Tạo lớp học"),
+        title: const Text(
+          "Tạo lớp học",
+        ),
       ),
+
       body: Padding(
         padding:
         const EdgeInsets.all(20),
+
         child: Column(
           children: [
 
             TextField(
               controller:
-              titleController,
+              nameController,
+
               decoration:
               const InputDecoration(
                 labelText:
                 "Tên lớp học",
+                border:
+                OutlineInputBorder(),
               ),
             ),
 
@@ -78,30 +100,19 @@ class _CreateCourseScreenState
               height: 20,
             ),
 
-            DropdownButtonFormField(
-              value: selectedType,
-              items: const [
+            TextField(
+              controller:
+              descriptionController,
 
-                DropdownMenuItem(
-                  value: "vocab",
-                  child: Text(
-                    "Từ vựng",
-                  ),
-                ),
+              maxLines: 3,
 
-                DropdownMenuItem(
-                  value: "quiz",
-                  child: Text(
-                    "Quiz",
-                  ),
-                ),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  selectedType =
-                  value!;
-                });
-              },
+              decoration:
+              const InputDecoration(
+                labelText:
+                "Mô tả lớp học",
+                border:
+                OutlineInputBorder(),
+              ),
             ),
 
             const SizedBox(
@@ -110,9 +121,13 @@ class _CreateCourseScreenState
 
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+
+              child:
+              ElevatedButton(
+
                 onPressed:
                 saveCourse,
+
                 child: const Text(
                   "Tạo lớp học",
                 ),

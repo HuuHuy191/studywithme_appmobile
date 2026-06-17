@@ -10,4 +10,7 @@ class ApiConstants {
   static const vocab = "$baseUrl/vocab";
 
   static const quiz = "$baseUrl/quiz";
+
+  static const joinClass =
+      "$baseUrl/class-member/join";
 }

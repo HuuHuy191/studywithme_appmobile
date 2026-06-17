@@ -6,6 +6,7 @@ import '../../widgets/custom_textfield.dart';
 import 'register_screen.dart';
 import '../../controllers/auth_controller.dart';
 import '../home/home_screen.dart';
+import '../mainscreen/mainScreen.dart';
 class LoginScreen extends StatefulWidget {
 
   const LoginScreen({super.key});
@@ -19,38 +20,39 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final AuthController _authController = AuthController();
   Future<void> login() async {
-
-    bool success =
-    await _authController.login(
+    final result = await _authController.login(
       _usernameController.text.trim(),
       _passwordController.text.trim(),
     );
 
+    bool success = result['success'] ?? false;
+    String message = result['message'] ?? "Đăng nhập thất bại";
+
     print("LOGIN SUCCESS = $success");
 
     if (success) {
-
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Đăng nhập thành công"),
+          backgroundColor: Colors.green,
         ),
       );
 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => const MainScreen(),
         ),
       );
-
     } else {
-
+      // HIỂN THỊ CHÍNH XÁC TIN NHẮN TỪ SERVER (Ví dụ: Còn x lần thử, Đang bị khóa...)
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Sai email hoặc mật khẩu"),
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 4),
         ),
       );
-
     }
   }
   @override

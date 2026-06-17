@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/utils/storage_helper.dart';
 import '../auth/login_screen.dart';
 import '../home/home_screen.dart';
+import '../mainscreen/mainScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -38,7 +39,7 @@ class _SplashScreenState
         context,
         MaterialPageRoute(
           builder: (_) =>
-          const HomeScreen(),
+          const MainScreen(),
         ),
       );
 

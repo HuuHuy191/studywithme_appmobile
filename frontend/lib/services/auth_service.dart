@@ -19,6 +19,8 @@ class AuthService {
       }),
     );
 
+    print("LOGIN STATUS = ${response.statusCode}");
+    print("LOGIN BODY = ${response.body}");
 
     return jsonDecode(response.body);
   }

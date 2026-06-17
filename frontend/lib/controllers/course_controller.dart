@@ -8,18 +8,20 @@ class CourseController {
 
   Future<List<CourseModel>>
   getCourses() async {
+
     return await _service.getCourses();
   }
 
   Future<bool> createCourse(
-      String title,
-      String type) async {
+      String name,
+      String description,
+      ) async {
 
     CourseModel course =
     CourseModel(
-      id: "",
-      title: title,
-      type: type,
+      name: name,
+      description: description,
+      classCode: "",
     );
 
     return await _service

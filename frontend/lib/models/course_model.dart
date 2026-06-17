@@ -1,27 +1,47 @@
 class CourseModel {
-  final String id;
-  final String title;
-  final String type;
+
+  final int? id;
+
+  final String name;
+
+  final String description;
+
+  final String classCode;
 
   CourseModel({
-    required this.id,
-    required this.title,
-    required this.type,
+    this.id,
+    required this.name,
+    required this.description,
+    required this.classCode,
   });
 
   factory CourseModel.fromJson(
       Map<String, dynamic> json) {
+
     return CourseModel(
-      id: json["_id"] ?? "",
-      title: json["title"] ?? "",
-      type: json["type"] ?? "",
+
+      id: json["id"],
+
+      name: json["name"] ?? "",
+
+      description:
+      json["description"] ?? "",
+
+      classCode:
+      json["classCode"] ?? "",
+
     );
   }
 
   Map<String, dynamic> toJson() {
+
     return {
-      "title": title,
-      "type": type,
+
+      "name": name,
+
+      "description":
+      description,
+
     };
   }
 }
