@@ -16,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String? _securityMessage;
+  bool _isLocked = false;
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final AuthController _authController = AuthController();
@@ -31,12 +33,19 @@ class _LoginScreenState extends State<LoginScreen> {
     print("LOGIN SUCCESS = $success");
 
     if (success) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Đăng nhập thành công"),
-          backgroundColor: Colors.green,
-        ),
-      );
+      setState(() {
+
+        _securityMessage = message;
+
+        if (
+        message.contains("locked") ||
+            message.contains("khóa")
+        ) {
+          _isLocked = true;
+        }
+
+      });
+
 
       Navigator.pushReplacement(
         context,
@@ -102,7 +111,52 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 5),
                   const Text("Vui lòng đăng nhập để tiếp tục",
                       style: TextStyle(color: AppColors.grey)),
+                  const SizedBox(height: 15),
 
+                  if (_securityMessage != null)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: _isLocked
+                            ? Colors.red.shade50
+                            : Colors.orange.shade50,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: _isLocked
+                              ? Colors.red
+                              : Colors.orange,
+                        ),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Icon(
+                            _isLocked
+                                ? Icons.lock
+                                : Icons.warning_amber_rounded,
+                            color: _isLocked
+                                ? Colors.red
+                                : Colors.orange,
+                          ),
+
+                          const SizedBox(width: 10),
+
+                          Expanded(
+                            child: Text(
+                              _securityMessage!,
+                              style: TextStyle(
+                                color: _isLocked
+                                    ? Colors.red
+                                    : Colors.orange,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   const SizedBox(height: 40),
 
                   // Ô nhập Tên tài khoản
@@ -137,10 +191,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // Nút đăng nhập chính
                   CustomButton(
-                    text: "VÀO HỌC NGAY",
-                    onPressed: () async {
-                      await login();
-                      // Logic xử lý username: _usernameController.text
+                    text: _isLocked
+                        ? "🔒 TÀI KHOẢN ĐANG BỊ KHÓA"
+                        : "VÀO HỌC NGAY",
+
+                    onPressed: _isLocked
+                        ? null
+                        : () {
+                      login();
                     },
                   ),
 

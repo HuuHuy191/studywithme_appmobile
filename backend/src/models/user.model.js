@@ -33,6 +33,21 @@ const User = sequelize.define(
         role: {
             type: DataTypes.STRING
         },
+        login_attempts: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    defaultValue: 0 // Mặc định ban đầu là 0 lần sai
+                },
+
+                lock_until: {
+                    type: DataTypes.DATE,
+                    allowNull: true // Bình thường sẽ là null, chỉ có giá trị khi bị khóa
+                },
+
+
+                created_at: {
+                    type: DataTypes.DATE
+                },
 
         created_at: {
             type: DataTypes.DATE

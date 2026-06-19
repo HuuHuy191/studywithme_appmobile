@@ -10,7 +10,7 @@ const authMiddleware = async (
 
     const authHeader =
       req.headers.authorization;
-
+    //kiểm tra xem có token không
     if (!authHeader) {
       return res.status(401).json({
         success: false,
@@ -18,9 +18,10 @@ const authMiddleware = async (
       });
     }
 
-    const token =
-      authHeader.split(" ")[1];
 
+    const token = authHeader.split(" ")[1];
+
+//check format oken
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -28,6 +29,7 @@ const authMiddleware = async (
       });
     }
 
+   //Giải mã token
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET
@@ -39,6 +41,7 @@ const authMiddleware = async (
 
   } catch (error) {
 
+ //token sai hoặc hết hạn
     return res.status(401).json({
       success: false,
       message: "Unauthorized",
