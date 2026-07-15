@@ -44,7 +44,8 @@ exports.getVocabs = async (req, res) => {
         });
 
     } catch (error) {
-
+        console.error("GET VOCAB ERROR:");
+                console.error(error);
         res.status(403).json({
             success: false,
             message: error.message
@@ -77,4 +78,39 @@ exports.deleteVocab = async (req, res) => {
         });
 
     }
+};
+exports.updateVocab = async (req, res) => {
+
+    try {
+
+        const vocab =
+        await vocabService.updateVocab(
+
+            req.user.id,
+
+            req.params.id,
+
+            req.body
+
+        );
+
+        res.json({
+
+            success: true,
+
+            data: vocab
+
+        });
+
+    } catch(error){
+
+          console.error(error);
+
+          res.status(500).json({
+              success:false,
+              message:error.message
+          });
+
+      }
+
 };

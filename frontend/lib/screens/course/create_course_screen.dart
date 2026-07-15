@@ -24,6 +24,9 @@ class _CreateCourseScreenState
   final descriptionController =
   TextEditingController();
 
+  final maxMembersController =
+  TextEditingController(text: "30");
+
   final CourseController controller =
   CourseController();
 
@@ -47,6 +50,7 @@ class _CreateCourseScreenState
     await controller.createCourse(
       nameController.text.trim(),
       descriptionController.text.trim(),
+      int.parse(maxMembersController.text),
     );
 
     if (success) {
@@ -114,7 +118,19 @@ class _CreateCourseScreenState
                 OutlineInputBorder(),
               ),
             ),
+            const SizedBox(
+              height: 20,
+            ),
 
+            TextField(
+              controller: maxMembersController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: "Số lượng thành viên tối đa",
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.people),
+              ),
+            ),
             const SizedBox(
               height: 30,
             ),

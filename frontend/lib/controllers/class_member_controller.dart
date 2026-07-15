@@ -1,3 +1,4 @@
+import '../models/course_model.dart';
 import '../services/class_member_service.dart';
 
 class ClassMemberController {
@@ -11,5 +12,12 @@ class ClassMemberController {
     return await _service.joinClass(
       classCode,
     );
+  }
+
+  // Lấy danh sách lớp đã tham gia
+  Future<List<CourseModel>> getJoinedClasses() async {
+
+    return await _service.getJoinedClasses();
+
   }
 }

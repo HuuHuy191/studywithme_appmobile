@@ -30,6 +30,13 @@ const Classroom = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+
+    // Thêm mới
+    maxMembers: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 30,
+    },
   },
   {
     tableName: "Classrooms",

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../home/home_screen.dart';
 import '../course/class_screen.dart';
-import '../quiz/quiz_screen.dart';
+import '../home/home_screen.dart';
 import '../profile/profile_screen.dart';
-
+import '../quiz/quiz_home_screen.dart';
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -13,27 +11,24 @@ class MainScreen extends StatefulWidget {
       _MainScreenState();
 }
 
-class _MainScreenState
-    extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> {
 
   int currentIndex = 0;
 
   final List<Widget> screens = [
     const HomeScreen(),
     const ClassScreen(),
-    const QuizScreen(),
+    const QuizHomeScreen(),
     const ProfileScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
 
       body: screens[currentIndex],
 
-      bottomNavigationBar:
-      BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
 
         currentIndex: currentIndex,
 
@@ -66,6 +61,7 @@ class _MainScreenState
             icon: Icon(Icons.person),
             label: "Profile",
           ),
+
         ],
       ),
     );

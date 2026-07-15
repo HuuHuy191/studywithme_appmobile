@@ -1,5 +1,4 @@
 class CourseModel {
-
   final int? id;
 
   final String name;
@@ -7,12 +6,16 @@ class CourseModel {
   final String description;
 
   final String classCode;
+  final int? ownerId;
+  final int maxMembers;
 
   CourseModel({
     this.id,
     required this.name,
     required this.description,
     required this.classCode,
+    required this.maxMembers,
+    this.ownerId,
   });
 
   factory CourseModel.fromJson(
@@ -29,7 +32,8 @@ class CourseModel {
 
       classCode:
       json["classCode"] ?? "",
-
+      maxMembers: json["maxMembers"] ?? 30,
+      ownerId: json["ownerId"],
     );
   }
 
@@ -41,7 +45,7 @@ class CourseModel {
 
       "description":
       description,
-
+      "maxMembers": maxMembers,
     };
   }
 }

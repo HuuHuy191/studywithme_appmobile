@@ -12,5 +12,5 @@ class ApiConstants {
   static const quiz = "$baseUrl/quiz";
 
   static const joinClass =
-      "$baseUrl/class-member/join";
+      "$baseUrl/courses/join";
 }

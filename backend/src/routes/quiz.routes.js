@@ -1,41 +1,80 @@
 const express = require("express");
-const router = express.Router();
 
-const quizController =
-require("../controllers/quiz.controller");
+const router = express.Router();
 
 const authMiddleware =
 require("../middlewares/authMiddleware");
 
-// Tạo câu hỏi
+const quizController =
+require("../controllers/quiz.controller");
+
 router.post(
+
+    "/full",
+
+    authMiddleware,
+
+    quizController.createFullQuiz
+
+);
+// Tạo Quiz
+router.post(
+
     "/",
+
     authMiddleware,
+
     quizController.createQuiz
-);
 
-// Lấy câu hỏi theo course
+);
 router.get(
+
+    "/my",
+
+    authMiddleware,
+
+    quizController.getMyQuizzes
+
+);
+// Danh sách Quiz của lớp
+router.get(
+
     "/course/:courseId",
+
     authMiddleware,
+
     quizController.getQuizzes
-);
 
-// Xóa câu hỏi
-router.delete(
-    "/:id",
-    authMiddleware,
-    quizController.deleteQuiz
-);
-
-router.post(
-    "/submit",
-    authMiddleware,
-    quizController.submitQuiz
 );
 router.get(
-    "/results/:courseId",
+
+    "/:id",
+
     authMiddleware,
-    quizController.getResults
+
+    quizController.getQuizDetail
+
 );
+// Cập nhật Quiz
+router.put(
+
+    "/:id",
+
+    authMiddleware,
+
+    quizController.updateQuiz
+
+);
+
+// Xóa Quiz
+router.delete(
+
+    "/:id",
+
+    authMiddleware,
+
+    quizController.deleteQuiz
+
+);
+
 module.exports = router;

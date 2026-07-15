@@ -5,10 +5,46 @@ const env = require("./config/env");
 const { QueryTypes } = require("sequelize");
 
 // IMPORT MODELS
-require("./models/user.model");
-require("./models/course.model");
-require("./models/auditLog.model");
+const User = require("./models/user.model");
+const Course = require("./models/course.model");
+const ClassMember = require("./models/classMember.model");
+const AuditLog = require("./models/auditLog.model");
+const Quiz = require("./models/quiz.model");
+const QuizQuestion = require("./models/quizQuestion.model");
+// Một lớp có nhiều thành viên
+Course.hasMany(ClassMember, {
+    foreignKey: "classroomId"
+});
 
+// Một thành viên thuộc một lớp
+ClassMember.belongsTo(Course, {
+    foreignKey: "classroomId"
+});
+
+User.hasMany(ClassMember,{
+    foreignKey:"userId"
+});
+
+ClassMember.belongsTo(User,{
+    foreignKey:"userId"
+});
+
+Course.hasMany(Quiz,{
+    foreignKey:"courseId"
+});
+
+Quiz.belongsTo(Course,{
+    foreignKey:"courseId"
+});
+Quiz.hasMany(QuizQuestion, {
+    foreignKey: "quizId",
+    onDelete: "CASCADE",
+    hooks: true
+});
+
+QuizQuestion.belongsTo(Quiz, {
+    foreignKey: "quizId"
+});
 async function startServer() {
     try {
 

@@ -160,7 +160,7 @@ class _HomeScreenState
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          "Bạn đang có ${courses.length} khóa học",
+                          "Bạn đang có ${courses.length} khóa học đã tạo",
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.85),
                             fontSize: 14,

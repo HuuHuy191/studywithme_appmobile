@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../controllers/class_member_controller.dart';
 
+import '../../models/course_model.dart';
+import 'class_detail_screen.dart';
+
 class JoinClassScreen
     extends StatefulWidget {
 
@@ -24,6 +27,33 @@ class _JoinClassScreenState
   final controller =
   ClassMemberController();
 
+  List<CourseModel> joinedClasses = [];
+
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadJoinedClasses();
+  }
+  Future<void> loadJoinedClasses() async {
+
+    try {
+
+      joinedClasses =
+      await controller.getJoinedClasses();
+
+    } catch (e) {
+
+      debugPrint(e.toString());
+
+    }
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   Future<void> joinClass() async {
 
     bool success =
@@ -42,7 +72,9 @@ class _JoinClassScreenState
         ),
       );
 
-      Navigator.pop(context);
+      await loadJoinedClasses();
+
+      codeController.clear();
 
     } else {
 
@@ -92,18 +124,90 @@ class _JoinClassScreenState
             ),
 
             SizedBox(
-              width:
-              double.infinity,
+              width: double.infinity,
 
-              child:
-              ElevatedButton(
-                onPressed:
-                joinClass,
-
-                child:
-                const Text(
+              child: ElevatedButton(
+                onPressed: joinClass,
+                child: const Text(
                   "Tham gia",
                 ),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Các lớp đã tham gia",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Expanded(
+              child: isLoading
+                  ? const Center(
+                child: CircularProgressIndicator(),
+              )
+                  : joinedClasses.isEmpty
+                  ? const Center(
+                child: Text(
+                  "Bạn chưa tham gia lớp nào",
+                ),
+              )
+                  : ListView.builder(
+                itemCount: joinedClasses.length,
+                itemBuilder: (context, index) {
+
+                  final classroom =
+                  joinedClasses[index];
+
+                  return Card(
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.class_,
+                      ),
+
+                      title: Text(
+                        classroom.name,
+                      ),
+
+                      subtitle: Text(
+                        "Mã lớp: ${classroom.classCode}",
+                      ),
+
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                      ),
+
+                      onTap: () {
+
+                        Navigator.push(
+
+                          context,
+
+                          MaterialPageRoute(
+
+                            builder: (_) =>
+                                ClassDetailScreen(
+                                  classroom:
+                                  classroom,
+                                ),
+
+                          ),
+
+                        );
+
+                      },
+                    ),
+                  );
+
+                },
               ),
             ),
           ],

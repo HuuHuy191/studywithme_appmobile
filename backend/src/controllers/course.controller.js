@@ -91,6 +91,81 @@ exports.createCourse = async (req, res) => {
 
     }
 };
+// Tham gia lớp học bằng mã lớp
+exports.joinClass = async (req, res) => {
+
+    try {
+
+        const result = await courseService.joinClass(
+
+            req.user.id,
+
+            req.body.classCode
+
+        );
+
+        await saveLog(
+
+            req.user,
+
+            "JOIN_CLASS",
+
+            `Tham gia lớp ${result.name}`
+
+        );
+
+        res.json({
+
+            success: true,
+
+            data: result
+
+        });
+
+    } catch (error) {
+
+        res.status(400).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
+// Lấy đầy đủ thông tin lớp học
+exports.getClassDetail = async (req, res) => {
+
+    try {
+
+        const classroom =
+        await courseService.getClassDetail(
+            req.params.id
+        );
+
+        res.json({
+
+            success: true,
+
+            data: classroom
+
+        });
+
+    } catch (error) {
+
+        res.status(404).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
 
 // Xóa lớp học
 exports.deleteCourse = async (req, res) => {
@@ -116,4 +191,98 @@ exports.deleteCourse = async (req, res) => {
         });
 
     }
+};
+
+exports.updateCourse = async (req, res) => {
+
+    try {
+
+        const course =
+        await courseService.updateCourse(
+
+            req.user.id,
+
+            req.params.id,
+
+            req.body
+
+        );
+
+        await saveLog(
+
+            req.user,
+
+            "UPDATE_CLASS",
+
+            `Cập nhật lớp ${course.name}`
+
+        );
+
+        res.json({
+
+            success: true,
+
+            data: course
+
+        });
+
+    } catch (error) {
+
+        res.status(400).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
+
+// Chủ lớp xóa thành viên
+exports.removeMember = async (req, res) => {
+
+    try {
+
+        await courseService.removeMember(
+
+            req.user.id,
+
+            req.params.courseId,
+
+            req.params.userId
+
+        );
+
+        await saveLog(
+
+            req.user,
+
+            "REMOVE_MEMBER",
+
+            `Xóa thành viên ${req.params.userId} khỏi lớp ${req.params.courseId}`
+
+        );
+
+        res.json({
+
+            success: true,
+
+            message: "Đã xóa thành viên khỏi lớp."
+
+        });
+
+    } catch (error) {
+
+        res.status(400).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
 };

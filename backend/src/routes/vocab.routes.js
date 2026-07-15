@@ -24,5 +24,9 @@ router.delete(
     authMiddleware,
     vocabController.deleteVocab
 );
-
+router.put(
+    "/:id",
+    authMiddleware,
+    vocabController.updateVocab
+);
 module.exports = router;

@@ -1,21 +1,63 @@
 const express = require("express");
 const router = express.Router();
 
-const courseController = require("../controllers/course.controller");
-const authMiddleware = require("../middlewares/authMiddleware");
+const courseController =
+require("../controllers/course.controller");
 
-console.log("authMiddleware =", typeof authMiddleware);
-console.log("getCourses =", typeof courseController.getCourses);
-console.log("getCourseById =", typeof courseController.getCourseById);
-console.log("createCourse =", typeof courseController.createCourse);
-console.log("deleteCourse =", typeof courseController.deleteCourse);
+const authMiddleware =
+require("../middlewares/authMiddleware");
 
-router.get("/", authMiddleware, courseController.getCourses);
+// Danh sách lớp
+router.get(
+    "/",
+    authMiddleware,
+    courseController.getCourses
+);
 
-router.get("/:id", authMiddleware, courseController.getCourseById);
+// Chi tiết đầy đủ của lớp
+router.get(
+    "/:id/detail",
+    authMiddleware,
+    courseController.getClassDetail
+);
 
-router.post("/", authMiddleware, courseController.createCourse);
+// Lấy thông tin cơ bản của lớp
+router.get(
+    "/:id",
+    authMiddleware,
+    courseController.getCourseById
+);
 
-router.delete("/:id", authMiddleware, courseController.deleteCourse);
+// Tạo lớp
+router.post(
+    "/",
+    authMiddleware,
+    courseController.createCourse
+);
+
+// Tham gia lớp
+router.post(
+    "/join",
+    authMiddleware,
+    courseController.joinClass
+);
+//chỉnh sửa thông tin lớp
+router.put(
+    "/:id",
+    authMiddleware,
+    courseController.updateCourse
+);
+// Chủ lớp xóa thành viên
+router.delete(
+    "/:courseId/member/:userId",
+    authMiddleware,
+    courseController.removeMember
+);
+// Xóa lớp
+router.delete(
+    "/:id",
+    authMiddleware,
+    courseController.deleteCourse
+);
 
 module.exports = router;

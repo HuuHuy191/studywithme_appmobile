@@ -10,37 +10,22 @@ const Quiz = sequelize.define(
       autoIncrement: true,
     },
 
-    question: {
+    title: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
+
+    description: {
       type: DataTypes.TEXT,
-      allowNull: false,
-    },
-
-    optionA: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-
-    optionB: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-
-    optionC: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-
-    optionD: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-
-    correctAnswer: {
-      type: DataTypes.ENUM("A", "B", "C", "D"),
-      allowNull: false,
+      allowNull: true,
     },
 
     courseId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+
+    createdBy: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

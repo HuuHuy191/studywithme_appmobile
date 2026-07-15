@@ -15,6 +15,7 @@ const Vocab = sequelize.define(
       allowNull: false,
     },
 
+
     meaning: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -29,11 +30,16 @@ const Vocab = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    }
+
   },
   {
     tableName: "Vocabs",
     timestamps: true,
   }
 );
-
 module.exports = Vocab;

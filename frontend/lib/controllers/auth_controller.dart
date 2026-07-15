@@ -14,6 +14,11 @@ class AuthController {
 
         await prefs.setString("token", token);
         print("TOKEN = $token");
+        await prefs.setInt(
+          "userId",
+          result["data"]["id"],
+        );
+        print(result);
 
         return {
           "success": true,
